@@ -67,6 +67,40 @@ function validate(person, ex, n) {
   return null;
 }
 
+// Add the same rep entry to multiple people at once (e.g. a set done together).
+// body: { people: ["You","Kassian"], ex: "push", n: 20 }
+app.post("/entries/batch", async (req, res) => {
+  const { people, ex, n } = req.body || {};
+  if (!Array.isArray(people) || people.length === 0)
+    return res.status(400).json({ error: "No people selected" });
+  const bad = people.find((p) => !PEOPLE.includes(p));
+  if (bad) return res.status(400).json({ error: "Unknown person: " + bad });
+  if (!EXERCISES.includes(ex)) return res.status(400).json({ error: "Unknown exercise" });
+  const num = parseInt(n, 10);
+  if (!Number.isFinite(num) || num < 1) return res.status(400).json({ error: "Invalid rep count" });
+
+  const client = await pool.connect();
+  try {
+    await client.query("BEGIN");
+    const inserted = [];
+    for (const person of people) {
+      const { rows } = await client.query(
+        "INSERT INTO entries (person, ex, n) VALUES ($1,$2,$3) RETURNING id, person, ex, n, ts",
+        [person, ex, num]
+      );
+      inserted.push(rows[0]);
+    }
+    await client.query("COMMIT");
+    res.json({ added: inserted });
+  } catch (e) {
+    await client.query("ROLLBACK");
+    console.error(e);
+    res.status(500).json({ error: "Batch insert failed" });
+  } finally {
+    client.release();
+  }
+});
+
 // Add a rep entry
 app.post("/entries", async (req, res) => {
   const { person, ex, n } = req.body || {};
