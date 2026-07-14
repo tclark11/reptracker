@@ -18,7 +18,7 @@
   body{max-width:520px;margin:0 auto;padding:18px 16px 40px;min-height:100vh;}
 
   header{display:flex;align-items:baseline;justify-content:space-between;
-    border-bottom:2px solid var(--ink);padding-bottom:10px;margin-bottom:18px;}
+    border-bottom:2px solid var(--ink);padding-bottom:10px;margin-bottom:16px;}
   header h1{font-size:15px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;}
   header .hright{text-align:right;}
   header .date{font-size:12px;color:var(--muted);letter-spacing:.04em;
@@ -28,38 +28,57 @@
   header .streak.live{color:var(--push);}
   header .streak .best{color:var(--muted);font-weight:600;}
 
-  .people{display:flex;gap:6px;margin-bottom:16px;}
-  .people button{flex:1;background:transparent;border:1.5px solid var(--line);
-    border-radius:10px;padding:11px 6px;font-size:14px;font-weight:700;
-    color:var(--muted);cursor:pointer;transition:.15s;}
-  .people button.active{background:var(--ink);color:var(--paper);border-color:var(--ink);}
+  /* who's doing this set */
+  .who-label{font-size:10px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--muted);font-weight:800;margin-bottom:8px;}
+  .people{display:flex;gap:7px;margin-bottom:6px;flex-wrap:wrap;}
+  .people button{flex:1 1 calc(25% - 6px);min-width:70px;background:transparent;
+    border:1.5px solid var(--line);border-radius:11px;padding:12px 6px;font-size:14px;
+    font-weight:700;color:var(--muted);cursor:pointer;transition:.12s;position:relative;}
+  .people button.sel{background:var(--ink);color:var(--paper);border-color:var(--ink);}
+  .people button .tick{position:absolute;top:5px;right:7px;font-size:10px;opacity:0;}
+  .people button.sel .tick{opacity:1;}
+  .selhint{font-size:11px;color:var(--muted);margin-bottom:16px;min-height:15px;}
 
-  .exercise{background:var(--card);border:1.5px solid var(--line);
-    border-radius:16px;padding:16px;margin-bottom:14px;}
-  .exercise .top{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;}
-  .exercise .name{font-size:13px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;}
-  .exercise .today{font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums;}
-  .dot{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:7px;vertical-align:middle;}
-  .push .dot{background:var(--push);} .push .name{color:var(--push);}
-  .sit .dot{background:var(--sit);} .sit .name{color:var(--sit);}
+  /* exercise switch */
+  .exswitch{display:flex;gap:7px;margin-bottom:14px;}
+  .exswitch button{flex:1;border:1.5px solid var(--line);background:transparent;
+    border-radius:11px;padding:11px 6px;font-size:12px;font-weight:800;
+    letter-spacing:.08em;text-transform:uppercase;color:var(--muted);cursor:pointer;}
+  .exswitch button.on[data-ex="push"]{background:var(--push);color:#fff;border-color:var(--push);}
+  .exswitch button.on[data-ex="sit"]{background:var(--sit);color:#fff;border-color:var(--sit);}
 
-  .quick{display:flex;gap:7px;margin-bottom:10px;}
-  .quick button{flex:1;border:none;border-radius:10px;padding:14px 0;
-    font-size:16px;font-weight:800;color:#fff;cursor:pointer;font-variant-numeric:tabular-nums;}
-  .push .quick button{background:var(--push);}
-  .sit .quick button{background:var(--sit);}
-  .quick button:active{transform:scale(.96);}
-  .quick button:disabled{opacity:.5;}
+  /* counter row */
+  .counter{display:flex;gap:10px;align-items:stretch;margin-bottom:12px;}
+  .counter .step{width:72px;border:none;border-radius:14px;background:var(--ink);
+    color:var(--paper);font-size:32px;font-weight:600;line-height:1;cursor:pointer;
+    display:flex;align-items:center;justify-content:center;user-select:none;
+    touch-action:none;transition:transform .08s,background .12s;}
+  .counter .step:active{transform:scale(.94);}
+  .counter .step.holding{background:var(--push);}
+  .counter .amount{flex:1;border:1.5px solid var(--line);border-radius:14px;
+    background:#fff;text-align:center;font-size:38px;font-weight:800;color:var(--ink);
+    font-variant-numeric:tabular-nums;padding:8px 4px;min-width:0;}
+  .counter .amount:focus{outline:none;border-color:var(--ink);}
 
-  .custom{display:flex;gap:7px;}
-  .custom input{flex:1;border:1.5px solid var(--line);border-radius:10px;padding:12px;
-    font-size:16px;background:var(--paper);color:var(--ink);text-align:center;font-variant-numeric:tabular-nums;}
-  .custom input:focus{outline:none;border-color:var(--ink);}
-  .custom button{border:1.5px solid var(--ink);background:var(--ink);color:var(--paper);
-    border-radius:10px;padding:0 18px;font-size:14px;font-weight:700;cursor:pointer;}
+  /* quick increments */
+  .quick{display:flex;gap:10px;margin-bottom:16px;}
+  .quick button{flex:1;border:none;border-radius:14px;background:var(--ink);
+    color:var(--paper);padding:17px 0;font-size:19px;font-weight:800;cursor:pointer;
+    font-variant-numeric:tabular-nums;transition:transform .08s;}
+  .quick button:active{transform:scale(.95);}
 
+  /* commit */
+  .commit{width:100%;border:none;border-radius:14px;padding:17px;font-size:15px;
+    font-weight:800;letter-spacing:.06em;text-transform:uppercase;cursor:pointer;
+    color:#fff;background:var(--push);transition:transform .08s,opacity .12s;}
+  .commit.sit{background:var(--sit);}
+  .commit:active{transform:scale(.98);}
+  .commit:disabled{opacity:.4;cursor:default;}
+
+  /* stats */
   .stats h2{font-size:11px;letter-spacing:.16em;text-transform:uppercase;
-    color:var(--muted);margin:18px 0 10px;font-weight:800;}
+    color:var(--muted);margin:22px 0 10px;font-weight:800;}
   .grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
   .stat{background:var(--card);border:1.5px solid var(--line);border-radius:12px;padding:12px 14px;}
   .stat .label{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-weight:700;margin-bottom:6px;}
@@ -69,14 +88,6 @@
   .stat .tag{font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-top:3px;}
   .stat.total{grid-column:1 / -1;border-color:var(--ink);border-width:2px;}
   .stat.total .n{font-size:30px;}
-
-  .footer{margin-top:26px;text-align:center;}
-  .undo{background:none;border:1.5px solid var(--line);border-radius:10px;padding:9px 16px;
-    font-size:12px;font-weight:700;color:var(--muted);letter-spacing:.06em;cursor:pointer;}
-  .undo:disabled{opacity:.35;}
-  .linkrow{margin-top:14px;display:flex;gap:16px;justify-content:center;}
-  .linkrow a,.linkrow button{background:none;border:none;color:var(--muted);font-size:11px;
-    text-decoration:underline;letter-spacing:.05em;cursor:pointer;font-family:inherit;}
 
   /* chart */
   .chart{background:var(--card);border:1.5px solid var(--line);border-radius:16px;
@@ -92,13 +103,25 @@
   .chart .toggles.ex button.on[data-ex="push"]{background:var(--push);border-color:var(--push);}
   .chart .toggles.ex button.on[data-ex="sit"]{background:var(--sit);border-color:var(--sit);}
   .chart svg{width:100%;height:150px;display:block;}
-  .chart .bar{transition:height .25s,y .25s;}
   .chart .axislbl{font-size:9px;fill:var(--muted);font-variant-numeric:tabular-nums;}
-  .chart .empty{text-align:center;color:var(--muted);font-size:12px;padding:40px 0;}
+
+  /* the whole stats+chart block hides when != 1 person selected */
+  .viewing-note{background:var(--card);border:1.5px dashed var(--line);border-radius:14px;
+    padding:20px 16px;text-align:center;color:var(--muted);font-size:13px;margin-top:22px;}
+  .hide{display:none !important;}
+
+  .footer{margin-top:26px;text-align:center;}
+  .undo{background:none;border:1.5px solid var(--line);border-radius:10px;padding:9px 16px;
+    font-size:12px;font-weight:700;color:var(--muted);letter-spacing:.06em;cursor:pointer;}
+  .undo:disabled{opacity:.35;}
+  .linkrow{margin-top:14px;display:flex;gap:16px;justify-content:center;}
+  .linkrow a,.linkrow button{background:none;border:none;color:var(--muted);font-size:11px;
+    text-decoration:underline;letter-spacing:.05em;cursor:pointer;font-family:inherit;}
 
   .flash{position:fixed;left:50%;bottom:28px;transform:translateX(-50%) translateY(20px);
     background:var(--ink);color:var(--paper);padding:11px 20px;border-radius:30px;
-    font-size:13px;font-weight:700;opacity:0;pointer-events:none;transition:.25s;z-index:50;}
+    font-size:13px;font-weight:700;opacity:0;pointer-events:none;transition:.25s;z-index:50;
+    max-width:90%;text-align:center;}
   .flash.show{opacity:1;transform:translateX(-50%) translateY(0);}
   .flash.err{background:var(--push);}
 
@@ -113,7 +136,6 @@
   .setup input:focus{outline:none;border-color:var(--ink);}
   .setup .go{width:100%;border:none;background:var(--ink);color:var(--paper);border-radius:10px;
     padding:14px;font-size:14px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;}
-  .hide{display:none !important;}
 </style>
 </head>
 <body>
@@ -139,89 +161,82 @@
       </span>
     </header>
 
+    <div class="who-label">Who's doing this set?</div>
     <div class="people" id="people"></div>
+    <div class="selhint" id="selhint"></div>
 
-    <div class="exercise push">
-      <div class="top">
-        <span class="name"><span class="dot"></span>Push-ups</span>
-        <span class="today" id="pushToday">today 0</span>
-      </div>
-      <div class="quick">
-        <button data-ex="push" data-n="5">+5</button>
-        <button data-ex="push" data-n="10">+10</button>
-        <button data-ex="push" data-n="20">+20</button>
-        <button data-ex="push" data-n="25">+25</button>
-      </div>
-      <div class="custom">
-        <input type="number" inputmode="numeric" min="1" placeholder="custom" id="pushCustom">
-        <button data-ex="push" data-custom="1">Add</button>
-      </div>
+    <div class="exswitch" id="exswitch">
+      <button data-ex="push" class="on">Push-ups</button>
+      <button data-ex="sit">Sit-ups</button>
     </div>
 
-    <div class="exercise sit">
-      <div class="top">
-        <span class="name"><span class="dot"></span>Sit-ups</span>
-        <span class="today" id="sitToday">today 0</span>
-      </div>
-      <div class="quick">
-        <button data-ex="sit" data-n="5">+5</button>
-        <button data-ex="sit" data-n="10">+10</button>
-        <button data-ex="sit" data-n="20">+20</button>
-        <button data-ex="sit" data-n="25">+25</button>
-      </div>
-      <div class="custom">
-        <input type="number" inputmode="numeric" min="1" placeholder="custom" id="sitCustom">
-        <button data-ex="sit" data-custom="1">Add</button>
-      </div>
+    <div class="counter">
+      <button class="step" id="minus" aria-label="decrease">–</button>
+      <input class="amount" id="amount" type="number" inputmode="numeric" value="10" min="0">
+      <button class="step" id="plus" aria-label="increase">+</button>
     </div>
 
-    <div class="stats">
-      <h2 id="statsHeading">Totals</h2>
-      <div class="grid">
-        <div class="stat"><div class="label">Today</div>
-          <div class="nums"><span class="n np" id="s_day_p">0</span><span class="n ns" id="s_day_s">0</span></div>
-          <div class="tag">push · sit</div></div>
-        <div class="stat"><div class="label">This Week</div>
-          <div class="nums"><span class="n np" id="s_week_p">0</span><span class="n ns" id="s_week_s">0</span></div>
-          <div class="tag">push · sit</div></div>
-        <div class="stat"><div class="label">This Month</div>
-          <div class="nums"><span class="n np" id="s_month_p">0</span><span class="n ns" id="s_month_s">0</span></div>
-          <div class="tag">push · sit</div></div>
-        <div class="stat"><div class="label">This Year</div>
-          <div class="nums"><span class="n np" id="s_year_p">0</span><span class="n ns" id="s_year_s">0</span></div>
-          <div class="tag">push · sit</div></div>
-        <div class="stat total"><div class="label">All Time</div>
-          <div class="nums"><span class="n np" id="s_all_p">0</span><span class="n ns" id="s_all_s">0</span></div>
-          <div class="tag">push · sit</div></div>
-      </div>
+    <div class="quick">
+      <button data-add="10">+10</button>
+      <button data-add="20">+20</button>
+      <button data-add="30">+30</button>
     </div>
 
-    <div class="chart">
-      <div class="chead">
-        <span class="ctitle">Daily reps</span>
-        <div style="display:flex;gap:10px;">
-          <div class="toggles ex" id="exToggles">
-            <button data-ex="push" class="on">Push</button>
-            <button data-ex="sit">Sit</button>
-          </div>
-          <div class="toggles" id="rangeToggles">
-            <button data-days="7">7d</button>
-            <button data-days="14" class="on">14d</button>
-            <button data-days="30">30d</button>
-          </div>
+    <button class="commit" id="commit">Add 10 push-ups</button>
+
+    <!-- Stats (only shown when exactly one person selected) -->
+    <div id="statsBlock">
+      <div class="stats">
+        <h2 id="statsHeading">Totals</h2>
+        <div class="grid">
+          <div class="stat"><div class="label">Today</div>
+            <div class="nums"><span class="n np" id="s_day_p">0</span><span class="n ns" id="s_day_s">0</span></div>
+            <div class="tag">push · sit</div></div>
+          <div class="stat"><div class="label">This Week</div>
+            <div class="nums"><span class="n np" id="s_week_p">0</span><span class="n ns" id="s_week_s">0</span></div>
+            <div class="tag">push · sit</div></div>
+          <div class="stat"><div class="label">This Month</div>
+            <div class="nums"><span class="n np" id="s_month_p">0</span><span class="n ns" id="s_month_s">0</span></div>
+            <div class="tag">push · sit</div></div>
+          <div class="stat"><div class="label">This Year</div>
+            <div class="nums"><span class="n np" id="s_year_p">0</span><span class="n ns" id="s_year_s">0</span></div>
+            <div class="tag">push · sit</div></div>
+          <div class="stat total"><div class="label">All Time</div>
+            <div class="nums"><span class="n np" id="s_all_p">0</span><span class="n ns" id="s_all_s">0</span></div>
+            <div class="tag">push · sit</div></div>
         </div>
       </div>
-      <div id="chartWrap"><svg id="chartSvg" viewBox="0 0 320 150" preserveAspectRatio="none"></svg></div>
-    </div>
 
-    <div class="footer">
-      <button class="undo" id="undoBtn" disabled>Undo last entry</button>
-      <div class="linkrow">
-        <a id="exportLink" href="#">Export CSV</a>
-        <button id="resetBtn">Reset person</button>
-        <button id="settingsBtn">Settings</button>
+      <div class="chart">
+        <div class="chead">
+          <span class="ctitle">Daily reps</span>
+          <div style="display:flex;gap:10px;">
+            <div class="toggles ex" id="exToggles">
+              <button data-ex="push" class="on">Push</button>
+              <button data-ex="sit">Sit</button>
+            </div>
+            <div class="toggles" id="rangeToggles">
+              <button data-days="7">7d</button>
+              <button data-days="14" class="on">14d</button>
+              <button data-days="30">30d</button>
+            </div>
+          </div>
+        </div>
+        <div id="chartWrap"><svg id="chartSvg" viewBox="0 0 320 150" preserveAspectRatio="none"></svg></div>
+      </div>
+
+      <div class="footer">
+        <button class="undo" id="undoBtn" disabled>Undo last entry</button>
+        <div class="linkrow">
+          <a id="exportLink" href="#">Export CSV</a>
+          <button id="resetBtn">Reset person</button>
+          <button id="settingsBtn">Settings</button>
+        </div>
       </div>
     </div>
+
+    <!-- Shown when 0 or 2+ people selected -->
+    <div class="viewing-note hide" id="viewingNote"></div>
   </div>
 
   <div class="flash" id="flash"></div>
@@ -234,7 +249,10 @@ const TZ = Intl.DateTimeFormat().resolvedOptions().timeZone || "UTC";
 let API = localStorage.getItem(LS_API) || "";
 let TOKEN = localStorage.getItem(LS_TOKEN) || "";
 let PEOPLE = [];
-let current = null;
+let selected = new Set();      // who reps apply to
+let ex = "push";
+let chartEx = "push";
+let chartDays = 14;
 
 const $ = (id) => document.getElementById(id);
 
@@ -283,36 +301,138 @@ $("settingsBtn").onclick = () => {
   $("setup").classList.remove("hide");
 };
 
-/* ---------- main ---------- */
+/* ---------- people multi-select ---------- */
 function buildPeople(){
   const el = $("people"); el.innerHTML="";
   PEOPLE.forEach(p=>{
     const b=document.createElement("button");
-    b.textContent=p; b.dataset.person=p;
-    if(p===current) b.classList.add("active");
-    b.onclick=()=>{ current=p;
-      document.querySelectorAll(".people button").forEach(x=>x.classList.toggle("active",x.dataset.person===p));
-      refresh(); };
+    b.innerHTML = p + '<span class="tick">✓</span>';
+    b.dataset.person=p;
+    if(selected.has(p)) b.classList.add("sel");
+    b.onclick=()=>{
+      if(selected.has(p)) selected.delete(p); else selected.add(p);
+      b.classList.toggle("sel", selected.has(p));
+      onSelectionChange();
+    };
     el.appendChild(b);
   });
 }
 
-let chartEx = "push";
-let chartDays = 14;
+function onSelectionChange(){
+  const arr=[...selected];
+  const hint=$("selhint");
+  if(arr.length===0) hint.textContent="Select at least one person.";
+  else if(arr.length===1) hint.textContent="Adding to "+arr[0]+".";
+  else hint.textContent="Adding to "+arr.slice(0,-1).join(", ")+" and "+arr.slice(-1)+" at once.";
+  updateCommit();
+  updateStatsVisibility();
+}
+
+/* ---------- exercise switch ---------- */
+document.querySelectorAll("#exswitch button").forEach(b=>{
+  b.onclick=()=>{ ex=b.dataset.ex;
+    document.querySelectorAll("#exswitch button").forEach(x=>x.classList.toggle("on",x===b));
+    updateCommit();
+  };
+});
+
+/* ---------- amount ---------- */
+function getAmount(){ return Math.max(0, parseInt($("amount").value,10)||0); }
+function setAmount(v){ $("amount").value = Math.max(0, v); updateCommit(); }
+
+function updateCommit(){
+  const n=getAmount();
+  const label = "Add "+n+" "+(ex==="push"?"push-ups":"sit-ups");
+  const np = selected.size;
+  const c=$("commit");
+  c.textContent = np>1 ? label+" · ×"+np+" people" : label;
+  c.classList.toggle("sit", ex==="sit");
+  c.disabled = (n<1 || selected.size===0);
+}
+
+/* single tap = ±1 ; hold = repeat with slight acceleration */
+function wireHold(btn, delta){
+  let holdTimer=null, repeatTimer=null;
+  const start=(e)=>{
+    e.preventDefault();
+    setAmount(getAmount()+delta);
+    holdTimer=setTimeout(()=>{
+      btn.classList.add("holding");
+      let interval=140;
+      const tick=()=>{
+        setAmount(getAmount()+delta);
+        interval=Math.max(45, interval-6);
+        repeatTimer=setTimeout(tick, interval);
+      };
+      repeatTimer=setTimeout(tick, interval);
+    }, 350);
+  };
+  const stop=()=>{
+    clearTimeout(holdTimer); clearTimeout(repeatTimer);
+    btn.classList.remove("holding");
+  };
+  btn.addEventListener("mousedown", start);
+  btn.addEventListener("touchstart", start, {passive:false});
+  ["mouseup","mouseleave","touchend","touchcancel"].forEach(ev=>btn.addEventListener(ev, stop));
+}
+wireHold($("plus"), 1);
+wireHold($("minus"), -1);
+$("amount").addEventListener("input", updateCommit);
+
+/* quick buttons set the amount */
+document.querySelectorAll(".quick button").forEach(b=>{
+  b.onclick=()=>{ setAmount(parseInt(b.dataset.add,10)); };
+});
+
+/* ---------- commit ---------- */
+$("commit").onclick = async () => {
+  const n=getAmount();
+  const people=[...selected];
+  if(n<1 || people.length===0) return;
+  $("commit").disabled = true;
+  try{
+    await api("/entries/batch",{method:"POST",body:JSON.stringify({people, ex, n})});
+    const who = people.length>1 ? people.join(" & ") : people[0];
+    flash("Added "+n+" "+(ex==="push"?"push-ups":"sit-ups")+" · "+who);
+    if(people.length===1) refresh();  // update the visible stats
+  }catch(e){ flash("Save failed — not recorded", true); }
+  updateCommit();
+};
+
+/* ---------- stats visibility ---------- */
+function updateStatsVisibility(){
+  const arr=[...selected];
+  const block=$("statsBlock");
+  const note=$("viewingNote");
+  if(arr.length===1){
+    block.classList.remove("hide");
+    note.classList.add("hide");
+    refresh();
+  }else{
+    block.classList.add("hide");
+    note.classList.remove("hide");
+    note.textContent = arr.length===0
+      ? "Select one person to see their totals and chart."
+      : "Showing "+arr.length+" people. Totals and chart appear when just one person is selected.";
+  }
+}
+
+/* ---------- stats / chart / streak (single selected person) ---------- */
+function selectedPerson(){ const a=[...selected]; return a.length===1 ? a[0] : null; }
 
 async function refresh(){
+  const person = selectedPerson();
+  if(!person) return;
   const now=new Date();
   $("dateLabel").textContent = now.toLocaleDateString(undefined,{weekday:"short",day:"numeric",month:"short"});
-  $("statsHeading").textContent = current+" · Totals";
+  $("statsHeading").textContent = person+" · Totals";
   try{
-    const t = await (await api(`/totals/${encodeURIComponent(current)}?tz=${encodeURIComponent(TZ)}`)).json();
+    const t = await (await api(`/totals/${encodeURIComponent(person)}?tz=${encodeURIComponent(TZ)}`)).json();
     const map={day:"day",week:"week",month:"month",year:"year",all:"all_time"};
     for(const [k,field] of Object.entries(map)){
       $(`s_${k}_p`).textContent = t.push[field];
       $(`s_${k}_s`).textContent = t.sit[field];
     }
-    $("pushToday").textContent = "today "+t.push.day;
-    $("sitToday").textContent  = "today "+t.sit.day;
     $("undoBtn").disabled = (t.push.all_time + t.sit.all_time) === 0;
 
     const s = t.streak || {current:0,best:0,active_today:false};
@@ -327,17 +447,18 @@ async function refresh(){
       sl.innerHTML = `<span class="best">best streak ${s.best} days</span>`;
       sl.classList.remove("live");
     } else {
-      sl.textContent = "";
-      sl.classList.remove("live");
+      sl.textContent = ""; sl.classList.remove("live");
     }
   }catch(e){ flash("Load failed — check connection", true); }
   drawChart();
 }
 
 async function drawChart(){
+  const person = selectedPerson();
+  if(!person) return;
   const svg = $("chartSvg");
   try{
-    const data = await (await api(`/history/${encodeURIComponent(current)}?tz=${encodeURIComponent(TZ)}&days=${chartDays}`)).json();
+    const data = await (await api(`/history/${encodeURIComponent(person)}?tz=${encodeURIComponent(TZ)}&days=${chartDays}`)).json();
     const W=320, H=150, padB=18, padL=22, padR=4, padT=6;
     const plotW=W-padL-padR, plotH=H-padT-padB;
     const vals=data.map(d=>d[chartEx]);
@@ -345,22 +466,18 @@ async function drawChart(){
     const color = chartEx==="push" ? "#c1502e" : "#2f6d63";
     const n=data.length;
     const slot=plotW/n, bw=Math.max(2, slot*0.66);
-
-    // y gridline at max, baseline at 0
     let els="";
     els+=`<line x1="${padL}" y1="${padT}" x2="${padL}" y2="${padT+plotH}" stroke="#c9c3b2" stroke-width="1"/>`;
     els+=`<line x1="${padL}" y1="${padT+plotH}" x2="${W-padR}" y2="${padT+plotH}" stroke="#c9c3b2" stroke-width="1"/>`;
     els+=`<text class="axislbl" x="${padL-4}" y="${padT+6}" text-anchor="end">${max}</text>`;
     els+=`<text class="axislbl" x="${padL-4}" y="${padT+plotH}" text-anchor="end">0</text>`;
-
     data.forEach((d,i)=>{
       const v=d[chartEx];
       const h=(v/max)*plotH;
       const x=padL + i*slot + (slot-bw)/2;
       const y=padT + (plotH-h);
-      els+=`<rect class="bar" x="${x.toFixed(1)}" y="${y.toFixed(1)}" width="${bw.toFixed(1)}" height="${h.toFixed(1)}" rx="1.5" fill="${color}"/>`;
+      els+=`<rect x="${x.toFixed(1)}" y="${y.toFixed(1)}" width="${bw.toFixed(1)}" height="${h.toFixed(1)}" rx="1.5" fill="${color}"/>`;
     });
-    // first & last date labels only, to avoid clutter
     const fmt=(s)=>{const p=s.split("-");return p[2]+"/"+p[1];};
     if(n){
       els+=`<text class="axislbl" x="${padL}" y="${H-5}" text-anchor="start">${fmt(data[0].day)}</text>`;
@@ -370,7 +487,6 @@ async function drawChart(){
   }catch(e){ svg.innerHTML=`<text class="axislbl" x="160" y="75" text-anchor="middle">No data yet</text>`; }
 }
 
-// chart toggles
 document.querySelectorAll("#exToggles button").forEach(b=>{
   b.onclick=()=>{ chartEx=b.dataset.ex;
     document.querySelectorAll("#exToggles button").forEach(x=>x.classList.toggle("on",x===b));
@@ -382,64 +498,41 @@ document.querySelectorAll("#rangeToggles button").forEach(b=>{
     drawChart(); };
 });
 
-function setBusy(b){ document.querySelectorAll(".quick button").forEach(x=>x.disabled=b); }
-
-async function addRep(ex, n){
-  n=parseInt(n,10);
-  if(!n||n<1) return;
-  setBusy(true);
-  try{
-    await api("/entries",{method:"POST",body:JSON.stringify({person:current,ex,n})});
-    flash("+"+n+" "+(ex==="push"?"push-ups":"sit-ups")+" · "+current);
-    await refresh();
-  }catch(e){ flash("Save failed — not recorded", true); }
-  setBusy(false);
-}
-
-document.querySelectorAll("[data-ex]").forEach(btn=>{
-  btn.onclick=()=>{
-    const ex=btn.dataset.ex;
-    if(btn.dataset.custom){
-      const inp=$(ex+"Custom"); addRep(ex, inp.value); inp.value="";
-    }else addRep(ex, btn.dataset.n);
-  };
-});
-
 $("undoBtn").onclick=async ()=>{
+  const person=selectedPerson(); if(!person) return;
   try{
-    const r=await (await api(`/entries/last/${encodeURIComponent(current)}`,{method:"DELETE"})).json();
+    const r=await (await api(`/entries/last/${encodeURIComponent(person)}`,{method:"DELETE"})).json();
     if(r) flash("Removed "+r.n+" "+(r.ex==="push"?"push-ups":"sit-ups"));
-    await refresh();
+    refresh();
   }catch(e){ flash("Undo failed", true); }
 };
 
 $("resetBtn").onclick=async ()=>{
-  if(!confirm("Erase all recorded reps for "+current+"? This can't be undone.")) return;
+  const person=selectedPerson(); if(!person) return;
+  if(!confirm("Erase all recorded reps for "+person+"? This can't be undone.")) return;
   try{
-    await api(`/entries/${encodeURIComponent(current)}`,{method:"DELETE"});
-    flash(current+" data cleared"); await refresh();
+    await api(`/entries/${encodeURIComponent(person)}`,{method:"DELETE"});
+    flash(person+" data cleared"); refresh();
   }catch(e){ flash("Reset failed", true); }
 };
 
 $("exportLink").onclick=(e)=>{ e.preventDefault(); window.open(API+"/export.csv","_blank"); };
 
+/* ---------- boot ---------- */
 function boot(){
   $("setup").classList.add("hide");
   $("app").classList.remove("hide");
-  current = PEOPLE[0];
+  selected = new Set([PEOPLE[0]]);   // default: first person selected
   buildPeople();
-  refresh();
+  onSelectionChange();
 }
 
-/* auto-start if already configured */
 (async function(){
   if(API){
     try{
       const cfg = await (await api("/config")).json();
       PEOPLE = cfg.people; boot();
-    }catch(e){
-      $("setup").classList.remove("hide");
-    }
+    }catch(e){ $("setup").classList.remove("hide"); }
   }else{
     $("setup").classList.remove("hide");
   }
